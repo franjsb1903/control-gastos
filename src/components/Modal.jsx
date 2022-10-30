@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Message from './Message'
 import CloseBtn from '../img/cerrar.svg'
 
-const Modal = ({ setModal, animateModal, setAnimateModal, saveSpent }) => {
+const Modal = ({ setModal, animateModal, setAnimateModal, saveExpense }) => {
   const [message, setMessage] = useState('')
 
   const [name, setName] = useState('')
@@ -31,7 +31,7 @@ const Modal = ({ setModal, animateModal, setAnimateModal, saveSpent }) => {
     }
 
     setMessage('')
-    saveSpent({
+    saveExpense({
       name,
       amount,
       category,

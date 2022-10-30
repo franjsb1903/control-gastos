@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Header from './components/Header'
-import SpentsList from './components/SpentsList'
+import ExpensesList from './components/ExpensesList'
 import Modal from './components/Modal'
 import { generateId } from './helpers'
 import IconNewBudget from './img/nuevo-gasto.svg'
@@ -12,7 +12,7 @@ function App() {
   const [modal, setModal] = useState(false)
   const [animateModal, setAnimateModal] = useState(false)
 
-  const [spents, setSpents] = useState([])
+  const [expenses, setExpenses] = useState([])
 
   const handleNewBudget = () => {
     setModal(true)
@@ -21,15 +21,16 @@ function App() {
     }, 500)
   }
 
-  const saveSpent = spent => {
-    spent.id = generateId()
-    spent.date = Date.now()
-    setSpents([...spents, spent])
+  const saveExpense = expense => {
+    expense.id = generateId()
+    expense.date = Date.now()
+    setExpenses([...expenses, expense])
   }
 
   return (
-    <div>
+    <div className={modal ? 'fijar' : ''}>
       <Header
+        expenses={expenses}
         budget={budget}
         setBudget={setBudget}
         isValidBudget={isValidBudget}
@@ -39,7 +40,7 @@ function App() {
       {isValidBudget && (
         <>
           <main>
-            <SpentsList spents={spents} />
+            <ExpensesList expenses={expenses} />
           </main>
           <div className="nuevo-gasto">
             <img
@@ -56,7 +57,7 @@ function App() {
           setModal={setModal}
           animateModal={animateModal}
           setAnimateModal={setAnimateModal}
-          saveSpent={saveSpent}
+          saveExpense={saveExpense}
         />
       )}
     </div>
