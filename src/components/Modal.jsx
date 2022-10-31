@@ -1,19 +1,39 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Message from './Message'
 import CloseBtn from '../img/cerrar.svg'
 
-const Modal = ({ setModal, animateModal, setAnimateModal, saveExpense }) => {
+const Modal = ({
+  setModal,
+  animateModal,
+  setAnimateModal,
+  saveExpense,
+  expenseToEdit,
+  setExpenseToEdit,
+}) => {
   const [message, setMessage] = useState('')
 
   const [name, setName] = useState('')
   const [amount, setAmount] = useState('')
   const [category, setCategory] = useState('')
+  const [id, setId] = useState('')
+  const [date, setDate] = useState('')
+
+  useEffect(() => {
+    if (Object.keys(expenseToEdit).length > 0) {
+      setName(expenseToEdit.name)
+      setAmount(expenseToEdit.amount)
+      setCategory(expenseToEdit.category)
+      setId(expenseToEdit.id)
+      setDate(expenseToEdit.date)
+    }
+  }, [])
 
   const closeModal = () => {
     setAnimateModal(false)
     setTimeout(() => {
       setModal(false)
     }, 500)
+    setExpenseToEdit({})
   }
 
   const clearForm = () => {
@@ -35,6 +55,8 @@ const Modal = ({ setModal, animateModal, setAnimateModal, saveExpense }) => {
       name,
       amount,
       category,
+      id,
+      date,
     })
     clearForm()
     closeModal()
@@ -49,7 +71,7 @@ const Modal = ({ setModal, animateModal, setAnimateModal, saveExpense }) => {
         onSubmit={handleSubmit}
         className={`formulario ${animateModal ? 'animar' : 'cerrar'}`}
       >
-        <legend>Nuevo Gasto</legend>
+        <legend>{expenseToEdit.name ? 'Editar Gasto' : 'Nuevo Gasto'}</legend>
         {message && <Message type={'error'}>{message}</Message>}
         <div className="campo">
           <label htmlFor="name">Nombre Gasto</label>
@@ -89,7 +111,10 @@ const Modal = ({ setModal, animateModal, setAnimateModal, saveExpense }) => {
           </select>
         </div>
 
-        <input type="submit" value="Añadir Gasto" />
+        <input
+          type="submit"
+          value={expenseToEdit.name ? 'Guardar Cambios' : 'Nuevo Gasto'}
+        />
       </form>
     </div>
   )
