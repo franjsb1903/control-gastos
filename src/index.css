@@ -205,7 +205,7 @@ header h1 {
 }
 .contenido-presupuesto p.negativo,
 .contenido-presupuesto p.negativo span {
-  color: red;
+  color: #dc2626;
 }
 .contenido-presupuesto span {
   font-weight: 900;
@@ -353,25 +353,24 @@ main {
 .modal .formulario {
   max-width: 80rem;
   width: 40rem;
-  transition-property: all;
-  transition-duration: 300ms;
-  transition-timing-function: ease-in;
   opacity: 0;
+  animation: animar-modal 300ms ease-in forwards;
 }
+
+@keyframes animar-modal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .modal label {
   color: var(--blanco);
 }
 body .modal {
   overflow: hidden;
-}
-
-.modal .formulario.animar {
-  position: relative;
-  opacity: 1;
-}
-
-.modal .formulario.cerrar {
-  opacity: 0;
 }
 
 .modal label {

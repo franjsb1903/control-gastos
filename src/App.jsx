@@ -1,20 +1,29 @@
 import { useState, useEffect } from 'react'
 import Header from './components/Header'
-import ExpensesList from './components/ExpensesList'
+import Filters from './components/Filters'
+import ExpensesList from './components/expenses/ExpensesList'
 import Modal from './components/Modal'
 import { generateId } from './helpers'
 import IconNewBudget from './img/nuevo-gasto.svg'
 
 function App() {
-  const [budget, setBudget] = useState(0)
+  const [budget, setBudget] = useState(
+    Number(localStorage.getItem('budget')) ?? 0
+  )
   const [isValidBudget, setIsValidBudget] = useState(false)
 
   const [modal, setModal] = useState(false)
-  const [animateModal, setAnimateModal] = useState(false)
 
-  const [expenses, setExpenses] = useState([])
+  const [expenses, setExpenses] = useState(
+    localStorage.getItem('expenses')
+      ? JSON.parse(localStorage.getItem('expenses'))
+      : []
+  )
 
   const [expenseToEdit, setExpenseToEdit] = useState({})
+
+  const [filter, setFilter] = useState('')
+  const [expensesFiltered, setExpensesFiltered] = useState([])
 
   useEffect(() => {
     if (Object.keys(expenseToEdit).length > 0) {
@@ -22,15 +31,36 @@ function App() {
     }
   }, [expenseToEdit])
 
+  useEffect(() => {
+    localStorage.setItem('budget', budget ?? 0)
+  }, [budget])
+
+  useEffect(() => {
+    localStorage.setItem('expenses', JSON.stringify(expenses) ?? [])
+  }, [expenses])
+
+  useEffect(() => {
+    if (filter) {
+      setExpensesFiltered(
+        expenses.filter(expense => expense.category === filter)
+      )
+      return
+    }
+    setExpensesFiltered(expenses)
+  }, [filter])
+
+  useEffect(() => {
+    const budgetLS = Number(localStorage.getItem('budget')) ?? 0
+    setIsValidBudget(budgetLS > 0)
+  }, [])
+
   const handleNewBudget = (resetExpenseToEdit = true) => {
     setModal(true)
     if (resetExpenseToEdit) setExpenseToEdit({})
-    setTimeout(() => {
-      setAnimateModal(true)
-    }, 500)
   }
 
   const saveExpense = expense => {
+    setFilter('')
     if (expense.id) {
       const expensesUpdated = expenses.map(expenseState =>
         expenseState.id === expense.id ? expense : expenseState
@@ -42,30 +72,40 @@ function App() {
     expense.id = generateId()
     expense.date = Date.now()
     setExpenses([...expenses, expense])
-    // TODO: VER LO DE CERRAR EL MODAL
   }
 
   const deleteExpense = id => {
     setExpenses(expenses.filter(expense => expense.id !== id))
   }
 
+  const resetApp = () => {
+    setExpenses([])
+    setExpensesFiltered([])
+    setBudget(0)
+    setIsValidBudget(false)
+  }
+
   return (
     <div className={modal ? 'fijar' : ''}>
       <Header
-        expenses={expenses}
+        expenses={expensesFiltered}
         budget={budget}
         setBudget={setBudget}
         isValidBudget={isValidBudget}
         setIsValidBudget={setIsValidBudget}
+        resetApp={resetApp}
       />
 
       {isValidBudget && (
         <>
           <main>
+            <Filters filter={filter} setFilter={setFilter} />
             <ExpensesList
               expenses={expenses}
               setExpenseToEdit={setExpenseToEdit}
               deleteExpense={deleteExpense}
+              filter={filter}
+              expensesFiltered={expensesFiltered}
             />
           </main>
           <div className="nuevo-gasto">
@@ -81,8 +121,6 @@ function App() {
       {modal && (
         <Modal
           setModal={setModal}
-          animateModal={animateModal}
-          setAnimateModal={setAnimateModal}
           saveExpense={saveExpense}
           expenseToEdit={expenseToEdit}
           setExpenseToEdit={setExpenseToEdit}
