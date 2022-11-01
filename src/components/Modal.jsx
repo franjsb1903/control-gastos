@@ -44,7 +44,14 @@ const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
   return (
     <div className="modal">
       <div className="cerrar-modal">
-        <img src={CloseBtn} alt="Close Modal" onClick={closeModal} />
+        <div style={{ margin: '2rem' }}>
+          <img
+            src={CloseBtn}
+            alt="Close Modal"
+            height={'3rem'}
+            onClick={closeModal}
+          />
+        </div>
       </div>
       <form onSubmit={handleSubmit} className={'formulario'}>
         <legend>{expenseToEdit.name ? 'Editar Gasto' : 'Nuevo Gasto'}</legend>

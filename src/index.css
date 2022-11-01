@@ -78,7 +78,8 @@ header h1 {
   border-bottom: 2px solid var(--azul);
 }
 .formulario .campo {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 2rem;
 }
 
@@ -340,11 +341,8 @@ main {
   bottom: 0;
 }
 .modal .cerrar-modal {
-  position: absolute;
-  right: 3rem;
-  top: 3rem;
-  width: 3rem;
-  height: 3rem;
+  display: flex;
+  justify-content: flex-end;
 }
 .modal .cerrar-modal img {
   width: 100%;
