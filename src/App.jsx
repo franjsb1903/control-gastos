@@ -32,7 +32,6 @@ function App() {
   }, [expenseToEdit])
 
   useEffect(() => {
-    console.log({ budget })
     localStorage.setItem('budget', budget)
   }, [budget])
 

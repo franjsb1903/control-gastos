@@ -61,7 +61,7 @@ const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
             placeholder="Añade el Nombre del Gasto"
             id="name"
             name="name"
-            value={expense.name}
+            value={expense.name ?? ''}
             onChange={onChangeInput}
           />
         </div>
@@ -72,7 +72,7 @@ const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
             placeholder="Añade la cantidad del gasto: ej. 300"
             id="amount"
             name="amount"
-            value={expense.amount}
+            value={expense.amount ?? ''}
             onChange={e =>
               setExpense({ ...expense, amount: Number(e.target.value) })
             }
@@ -82,7 +82,7 @@ const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
           <label htmlFor="category">Categoría</label>
           <select
             id="category"
-            value={expense.category}
+            value={expense.category ?? ''}
             name="category"
             onChange={onChangeInput}
           >
