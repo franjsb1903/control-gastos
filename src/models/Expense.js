@@ -1,4 +1,4 @@
-export const BudgetModel = {
+export const ExpenseModel = {
   id: '',
   name: '',
   amount: '',

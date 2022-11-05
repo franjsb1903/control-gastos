@@ -20,7 +20,7 @@ const Expense = ({ expense, setExpenseToEdit, deleteExpense }) => {
               <p className="categoria">{Categories[category].name}</p>
               <p className="nombre-gasto">{name}</p>
               <p className="fecha-gasto">
-                Añadido el: <span>{formatDate(date)}</span>
+                <span>{formatDate(date)}</span>
               </p>
             </div>
           </div>

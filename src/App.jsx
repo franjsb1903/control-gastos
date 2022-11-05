@@ -8,7 +8,7 @@ import IconNewBudget from './img/nuevo-gasto.svg'
 
 function App() {
   const [budget, setBudget] = useState(
-    Number(localStorage.getItem('budget')) ?? 0
+    localStorage.getItem('budget') ? Number(localStorage.getItem('budget')) : ''
   )
   const [isValidBudget, setIsValidBudget] = useState(false)
 
@@ -32,7 +32,8 @@ function App() {
   }, [expenseToEdit])
 
   useEffect(() => {
-    localStorage.setItem('budget', budget ?? 0)
+    console.log({ budget })
+    localStorage.setItem('budget', budget)
   }, [budget])
 
   useEffect(() => {
@@ -81,7 +82,7 @@ function App() {
   const resetApp = () => {
     setExpenses([])
     setExpensesFiltered([])
-    setBudget(0)
+    setBudget('')
     setIsValidBudget(false)
   }
 

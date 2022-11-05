@@ -57,16 +57,11 @@ header h1 {
 }
 
 .formulario {
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
-  padding: 10rem 0;
+  padding: 5rem 0;
 }
-@media (min-width: 768px) {
-  .formulario {
-    padding: 5rem 0;
-    width: 60rem;
-  }
-}
+
 .formulario legend {
   font-size: 3.6rem;
   text-align: center;
@@ -75,6 +70,7 @@ header h1 {
   color: var(--blanco);
   margin-bottom: 4rem;
   padding-bottom: 1rem;
+  width: 100%;
   border-bottom: 2px solid var(--azul);
 }
 .formulario .campo {
@@ -88,6 +84,12 @@ header h1 {
   font-size: 2.8rem;
   text-align: center;
   margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .formulario label {
+    font-size: 2.3rem;
+  }
 }
 
 .formulario input[type='text'],
@@ -186,6 +188,14 @@ header h1 {
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  .formulario input[type='text'].nuevo-presupuesto,
+  .formulario input[type='number'].nuevo-presupuesto {
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+
 .contenedor-presupuesto svg {
   width: 25rem;
 }
@@ -196,12 +206,13 @@ header h1 {
 .contenido-presupuesto p {
   font-weight: 400;
   color: var(--gris-oscuro);
-  font-size: 2.4rem;
+  font-size: 2rem;
   text-align: center;
 }
 @media (min-width: 768px) {
   .contenido-presupuesto p {
     text-align: left;
+    font-size: 2.4rem;
   }
 }
 .contenido-presupuesto p.negativo,
@@ -238,7 +249,15 @@ main {
   display: flex;
   align-items: center;
   gap: 2rem;
+  flex-direction: row;
 }
+
+@media (max-width: 768px) {
+  .filtros .campo {
+    flex-direction: column;
+  }
+}
+
 .filtros label {
   font-size: 3rem;
   font-weight: 900;
@@ -280,6 +299,12 @@ main {
   font-weight: 900;
 }
 
+@media (max-width: 768px) {
+  .cantidad-gasto {
+    font-size: 2rem;
+  }
+}
+
 .contenido-gasto {
   display: flex;
   align-items: center;
@@ -288,6 +313,12 @@ main {
 
 .contenido-gasto img {
   width: 10rem;
+}
+
+@media (max-width: 768px) {
+  .contenido-gasto img {
+    width: 6rem;
+  }
 }
 
 .descripcion-gasto p {
@@ -299,6 +330,7 @@ main {
   font-weight: 900;
   text-transform: uppercase;
 }
+
 .descripcion-gasto p {
   margin-bottom: 1rem;
 }
@@ -317,6 +349,18 @@ main {
 }
 .descripcion-gasto .fecha-gasto span {
   font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .descripcion-gasto .categoria {
+    font-size: 1.3rem;
+  }
+  .descripcion-gasto .nombre-gasto {
+    font-size: 2rem;
+  }
+  .descripcion-gasto .fecha-gasto {
+    font-size: 1.3rem;
+  }
 }
 
 .nuevo-gasto {
@@ -343,16 +387,21 @@ main {
 .modal .cerrar-modal {
   display: flex;
   justify-content: flex-end;
-}
-.modal .cerrar-modal img {
-  width: 100%;
+  margin: 1rem;
 }
 
 .modal .formulario {
-  max-width: 80rem;
-  width: 40rem;
+  max-width: 50%;
+  width: 100%;
   opacity: 0;
   animation: animar-modal 300ms ease-in forwards;
+}
+
+@media (max-width: 768px) {
+  .modal .formulario {
+    max-width: 90%;
+    width: 100%;
+  }
 }
 
 @keyframes animar-modal {
@@ -368,7 +417,7 @@ main {
   color: var(--blanco);
 }
 body .modal {
-  overflow: hidden;
+  overflow: auto;
 }
 
 .modal label {

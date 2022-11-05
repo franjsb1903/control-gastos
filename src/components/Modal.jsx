@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BudgetModel } from '../models/Budget'
+import { ExpenseModel } from '../models/Expense'
 import Message from './Message'
 import CloseBtn from '../img/cerrar.svg'
 import { Categories } from '../models/Categories'
@@ -7,7 +7,7 @@ import { Categories } from '../models/Categories'
 const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
   const [message, setMessage] = useState('')
 
-  const [budget, setBudget] = useState(expenseToEdit ?? BudgetModel)
+  const [expense, setExpense] = useState(expenseToEdit ?? ExpenseModel)
 
   const closeModal = () => {
     setModal(false)
@@ -15,14 +15,14 @@ const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
   }
 
   const clearForm = () => {
-    setBudget(BudgetModel)
+    setExpense(ExpenseModel)
   }
 
   const onChangeInput = e => {
     const { value, name } = e.target
 
-    setBudget({
-      ...budget,
+    setExpense({
+      ...expense,
       [name]: value,
     })
   }
@@ -30,13 +30,13 @@ const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
   const handleSubmit = e => {
     e.preventDefault()
 
-    if ([budget.name, budget.category, budget.amount].includes('')) {
+    if ([expense.name, expense.category, expense.amount].includes('')) {
       setMessage('Todos los campos son obligatorios')
       return
     }
 
     setMessage('')
-    saveExpense(budget)
+    saveExpense(expense)
     clearForm()
     closeModal()
   }
@@ -44,14 +44,12 @@ const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
   return (
     <div className="modal">
       <div className="cerrar-modal">
-        <div style={{ margin: '2rem' }}>
-          <img
-            src={CloseBtn}
-            alt="Close Modal"
-            height={'3rem'}
-            onClick={closeModal}
-          />
-        </div>
+        <img
+          src={CloseBtn}
+          alt="Close Modal"
+          height={'25px'}
+          onClick={closeModal}
+        />
       </div>
       <form onSubmit={handleSubmit} className={'formulario'}>
         <legend>{expenseToEdit.name ? 'Editar Gasto' : 'Nuevo Gasto'}</legend>
@@ -63,7 +61,7 @@ const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
             placeholder="Añade el Nombre del Gasto"
             id="name"
             name="name"
-            value={budget.name}
+            value={expense.name}
             onChange={onChangeInput}
           />
         </div>
@@ -74,9 +72,9 @@ const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
             placeholder="Añade la cantidad del gasto: ej. 300"
             id="amount"
             name="amount"
-            value={budget.amount}
+            value={expense.amount}
             onChange={e =>
-              setBudget({ ...budget, amount: Number(e.target.value) })
+              setExpense({ ...expense, amount: Number(e.target.value) })
             }
           />
         </div>
@@ -84,7 +82,7 @@ const Modal = ({ setModal, saveExpense, expenseToEdit, setExpenseToEdit }) => {
           <label htmlFor="category">Categoría</label>
           <select
             id="category"
-            value={budget.category}
+            value={expense.category}
             name="category"
             onChange={onChangeInput}
           >
